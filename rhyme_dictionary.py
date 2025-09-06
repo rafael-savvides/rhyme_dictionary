@@ -12,21 +12,37 @@ __generated_with = "0.15.2"
 app = marimo.App(width="columns")
 
 with app.setup:
-    import marimo as mo
-    from Phyme import Phyme
+    import micropip
     from itertools import zip_longest
-
-    ph = Phyme()
 
 
 @app.cell
 def _():
+    import marimo as mo
+    return (mo,)
+
+
+@app.cell
+async def _():
+    await micropip.install("phyme")
+    from Phyme import Phyme
+    return (Phyme,)
+
+
+@app.cell
+def _(Phyme):
+    ph = Phyme()
+    return (ph,)
+
+
+@app.cell
+def _(mo):
     mo.md(r"""# Rhyme dictionary""")
     return
 
 
 @app.cell
-def _():
+def _(mo):
     word_input = mo.ui.text(debounce=False, value="dog")
     word_input
     return (word_input,)
@@ -39,7 +55,7 @@ def _(word_input):
 
 
 @app.cell
-def _(get_rhymes, rhyme_select, word):
+def _(get_rhymes, mo, rhyme_select, word):
     mo.stop(word == "")
 
     try:
@@ -51,7 +67,7 @@ def _(get_rhymes, rhyme_select, word):
 
 
 @app.cell
-def _(rhyme_fns):
+def _(mo, rhyme_fns):
     rhyme_select = mo.ui.multiselect(
         list(rhyme_fns),
         value=["perfect", "family", "assonance", "substitution", "subtractive"],
@@ -62,7 +78,7 @@ def _(rhyme_fns):
 
 
 @app.cell
-def _(rhymes, word):
+def _(mo, rhymes, word):
     _s = (
         f"Rhymes for {word}: \n\n{concat_rhymes(rhymes)}"
         if rhymes
@@ -74,7 +90,7 @@ def _(rhymes, word):
 
 
 @app.cell
-def _():
+def _(ph):
     rhyme_fns = {
         "additive": ph.get_additive_rhymes,
         "assonance": ph.get_assonance_rhymes,

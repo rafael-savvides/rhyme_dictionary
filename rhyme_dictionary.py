@@ -27,7 +27,7 @@ async def _():
     # await micropip.install("phyme")
     # phyme doesn't have a wheel in pip, so make it with `python -m build` then link to it.
     await micropip.install(
-        "https://github.com/rafael-savvides/rhyme_dictionary/blob/main/phyme-0.0.9-py3-none-any.whl"
+        "https://github.com/rafael-savvides/rhyme_dictionary/raw/refs/heads/main/phyme-0.0.9-py3-none-any.whl"
     )
     from Phyme import Phyme
     return (Phyme,)

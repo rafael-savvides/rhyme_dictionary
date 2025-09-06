@@ -28,8 +28,8 @@ async def _(mo):
     # phyme doesn't have a wheel in pip, so make it with `python -m build` then install it.
 
     path_to_phyme_wheel = mo.notebook_location() / "public" / "phyme-0.0.9-py3-none-any.whl"
-    if not path_to_phyme_wheel.exists():
-        raise FileNotFoundError(f"File doesn't exist: {path_to_phyme_wheel}")
+    # if not path_to_phyme_wheel.exists():
+    #     raise FileNotFoundError(f"File doesn't exist: {path_to_phyme_wheel}")
     await micropip.install(path_to_phyme_wheel)
     from Phyme import Phyme
     return (Phyme,)
